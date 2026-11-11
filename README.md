@@ -1,7 +1,6 @@
 # AllDifferent – das Mengenargument – Streamlit-Demo
 
-<!-- TODO nach dem Deploy: direkt hierher den Live-Link setzen (Leerzeile davor und danach):
-**[→ Demo live ausprobieren](https://sebastianhanisch-alldifferent-demo.streamlit.app/)** -->
+**[→ Demo live ausprobieren](https://sebastianhanisch-alldifferent-demo.streamlit.app/)**
 
 Stück der **sat-constraint-programming**-Linie in der „Konzepte“-Reihe für die Website „Sebastian Hanisch – Operations Research und Machine Learning“, Wurzel des Arms „Constraint Programming“. Rückgriff ist [constraint-programming-demo](https://github.com/sebastian-hanisch/constraint-programming-demo) (Propagation am Rucksack), die weder „alle verschieden“ noch Mengenargumente kennt. Vehikel ist ein **Rotationsplan** (Mitarbeiter mal Tage, Schicht 1 bis n, jede Schicht je Zeile und je Spalte genau einmal, ein Teil der Zellen vorbelegt: ein lateinisches Quadrat mit Lücken) und eine **Hall-Instanz** (k + 1 Variablen auf k Werte). Das Constraint-Programming-Programm (Mini-CP) ist **neuer Code dieses Repos**; es hängt an keiner anderen Demo.
 
