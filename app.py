@@ -14,6 +14,7 @@ import streamlit as st
 
 import ald_constants as C
 import ald_evaluation as E
+import ald_live as L
 import ald_scenario as S
 import ald_search as Q
 import ald_visualization as V
@@ -43,18 +44,11 @@ def _kern_h1():
     return {st: E.messung(Q.loese(inst.dom_liste(), inst.gruppen, st)) for st in C.STUFEN}
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, max_entries=12)
 def _hall(k, m, frei, budget):
     t0 = time.perf_counter()
     zeilen = E.hall_zeilen(k, m, frei, budget)
     return zeilen, time.perf_counter() - t0
-
-
-@st.cache_data(show_spinner=False)
-def _rotation(ordnung, luecken, seed, budget):
-    t0 = time.perf_counter()
-    laeufe = E.rotationsplan_laeufe(ordnung, luecken, seed, budget)
-    return laeufe, time.perf_counter() - t0
 
 
 @st.cache_data(show_spinner=False)
@@ -247,8 +241,12 @@ with tab3:
     cx, cy = st.columns(2)
     ordnung = cx.slider("Ordnung (Mitarbeiter = Tage = Schichten)", *bounds("ordnung_slider"), key="ordnung_slider")
     luecken = cy.slider("Lücken in Prozent der Zellen", *bounds("lueck_slider"), key="lueck_slider", help="Der Rest ist vorbelegt, ganzzahlig auf die nächste Zelle gerundet.")
-    with st.spinner(f"Rechne Ordnung {ordnung}, bis zu {E.zahl(budget)} Knoten je Stärke …"):
-        laeufe, sek_einzel = _rotation(ordnung, luecken, int(seed), budget)
+    rot_key = (ordnung, luecken, int(seed), budget)
+    if st.session_state.get("rotation_gerechnet") != rot_key:
+        laeufe, sek_einzel = L.rotation(*rot_key)          # neue Einstellung: mit Fortschrittsanzeige (aus dem Zwischenspeicher, wo schon gerechnet)
+        st.session_state["rotation_gerechnet"] = rot_key
+    else:
+        laeufe, sek_einzel = L.rotation_aus_speicher(*rot_key)
     mess = {s: E.messung(laeufe[s]) for s in C.STUFEN}
     st.markdown("**Einzelinstanz (live gerechnet)**")
     m1, m2, m3 = st.columns(3)

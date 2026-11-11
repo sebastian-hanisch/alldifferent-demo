@@ -196,10 +196,15 @@ def verdict_hall(zeilen: list, m: int) -> tuple[str, str]:
 # ------------------------------------------------------------------------------------------------------------------------------------
 # Experiment 3 und 4: Rotationsplan mit Lücken
 # ------------------------------------------------------------------------------------------------------------------------------------
+def rotationsplan_stufe(ordnung: int, luecken: int, seed: int, budget: int, stufe: str):
+    """Eine Stärke auf der Einzelinstanz (eine Einheit von `rotationsplan_laeufe`)."""
+    inst, _ = S.rotationsplan_instanz(ordnung, luecken, seed)
+    return Q.loese(inst.dom_liste(), inst.gruppen, stufe, budget=budget)
+
+
 def rotationsplan_laeufe(ordnung: int, luecken: int, seed: int, budget: int) -> dict:
     """Die drei Stärken auf einer Einzelinstanz (Ordnung, Lücken in Prozent, Zufalls-Seed)."""
-    inst, _ = S.rotationsplan_instanz(ordnung, luecken, seed)
-    return {st: Q.loese(inst.dom_liste(), inst.gruppen, st, budget=budget) for st in C.STUFEN}
+    return {st: rotationsplan_stufe(ordnung, luecken, seed, budget, st) for st in C.STUFEN}
 
 
 def verdict_einzel(m: dict, ordnung: int, luecken: int) -> tuple[str, str]:

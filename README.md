@@ -101,6 +101,7 @@ Alle Aussagen gelten für diese Umsetzung (Matching bei jedem Aufruf neu, einfac
 | `ald_constants.py` | Regler-Grenzen, Farben, Presets, Vormessung der Hall-Instanz |
 | `ald_evaluation.py` | Kennzahlen, Verdikte, Auswertung des Sweeps |
 | `ald_layout.py` | Fester Kopf (Stylesheet) |
+| `ald_live.py` | Live-Knöpfe: Zwischenspeicher (`st.cache_data`, je Einheit) und Fortschrittsanzeige (zählt die fertigen Einheiten) |
 | `ald_presets.py` | Permalink (Begrenzen), Presets (Schnellstart in der Seitenleiste, aktives Preset hervorgehoben), Zufalls-Seed-Knopf |
 | `ald_visualization.py` | Plotly-Abbildungen (Matrix, Gitter, Matching-Graph, Verläufe; Achsen gesperrt) |
 | `ald_sweep_vorgerechnet.json` | vorgerechneter Sweep (Messung dieses Repos) |
