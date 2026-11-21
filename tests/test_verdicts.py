@@ -100,7 +100,7 @@ def test_verdict_verteilung_schwanz_nicht_median():
     art, text = ev.verdict_verteilung(v, 10, 58)
     assert art == "success"
     assert "Median 18,5 Knoten bei A gegen 13,5 bei C (Verhältnis 1,4)" in text and "Maximum 816 gegen 19" in text      # 18,5 / 13,5 = 1,37
-    assert text.endswith("Der Gewinn liegt im Schwanz, nicht im Median.")
+    assert text.endswith("Der Gewinn liegt im Tail, nicht im Median.")
     v["A"] = _v(34, 20000, 20000, 3)
     art, text = ev.verdict_verteilung(v, 12, 58)
     assert "(A: 3, B: 0, C: 0)" in text and "Median 34 Knoten" in text
@@ -116,7 +116,7 @@ def test_verdict_verteilung_genuegt_ohne_unterschied():
     v = {"A": _v(10, 12, 13, 0), "C": _v(9, 11, 12, 0)}
     art, text = ev.verdict_verteilung(v, 10, 50)
     assert art == "info" and "Hier genügt die paarweise Prüfung: Median-Verhältnis unter 2, Maximum-Verhältnis unter 5" in text
-    # Schwellen: Maximum-Verhältnis genau 5 zählt als Schwanz, knapp darunter nicht
+    # Schwellen: Maximum-Verhältnis genau 5 zählt als Tail, knapp darunter nicht
     assert ev.verdict_verteilung({"A": _v(10, 12, 50, 0), "C": _v(9, 10, 10, 0)}, 10, 50)[0] == "success"
     assert ev.verdict_verteilung({"A": _v(10, 12, 49, 0), "C": _v(9, 10, 10, 0)}, 10, 50)[0] == "info"
 

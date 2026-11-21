@@ -260,7 +260,7 @@ def _zahlmed(x: float) -> str:
 
 
 def verdict_verteilung(v: dict, ordnung: int, luecken: int) -> tuple[str, str]:
-    """Verdikt des Sweeps: Median gegen Schwanz (A gegen C). Schwellen: Median-Verhältnis ab 2 gilt als Unterschied im Median; als Schwanz zählt
+    """Verdikt des Sweeps: Median gegen Tail (A gegen C). Schwellen: Median-Verhältnis ab 2 gilt als Unterschied im Median; als Tail zählt
     ein Abbruch mehr als bei C oder ein Maximum von mindestens dem Fünffachen."""
     a, c = v["A"], v["C"]
     n = a["n"]
@@ -271,7 +271,7 @@ def verdict_verteilung(v: dict, ordnung: int, luecken: int) -> tuple[str, str]:
     satz = (f"Ordnung {ordnung}, {luecken} % Lücken, {n} feste Zufalls-Seeds: Median {_zahlmed(a['median'])} Knoten bei A gegen {_zahlmed(c['median'])} bei C "
             f"(Verhältnis {dezimal(quot_med)}), Maximum {zahl(a['max'])} gegen {zahl(c['max'])}; Abbrüche am Budget von {zahl(a['budget'])} Knoten in {n} Läufen ({abbr}).")
     if quot_med < 2 and schwanz:
-        return "success", satz + " Der Gewinn liegt im Schwanz, nicht im Median."
+        return "success", satz + " Der Gewinn liegt im Tail, nicht im Median."
     if quot_med >= 2:
         return "success", satz + " Schon im Median braucht A mindestens doppelt so viele Knoten wie C."
     return "info", satz + " Hier genügt die paarweise Prüfung: Median-Verhältnis unter 2, Maximum-Verhältnis unter 5 und nicht mehr Abbrüche als bei C."
